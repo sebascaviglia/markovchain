@@ -1,0 +1,51 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+###### Markov Chain
+# ejemplo climatico
+
+library(markovchain)
+
+estados <- c("Sol", "Nubes","Luvia")
+
+# Cargamos los valores matriz
+
+MatrizTRans <- matrix(c(0.7, 0.20, 0.10,
+                        0.30, 0.40, 0.30,
+                        0.20, 0.45, 0.35), byrow = TRUE , ncol = 3)
+
+# nombramos las filas y columnas
+
+colnames(MatrizTRans) <- estados
+rownames(MatrizTRans) <- estados
+
+El_tiempo <- new("markovchain", transitionMatrix = MatrizTRans)
+
+```
+
+
+```{r}
+# ploteamos la Matriz
+
+library(diagram)
+
+plotmat(t(El_tiempo@transitionMatrix), box.lwd =1.5, box.size = 0.06, box.col ='light yellow', box.cex = 0.75,
+box.type='diamond', shadow.size = 0, txt.col ='blue', txt.frot = 4, arr.col='red', arr.width = 0.2 , arr.length = 0.25, arr.type = 'triangle',  arr.lwd =1.2, arr.lcol = 'red', cex.txt =0.75, curve= 0.05, self.cex=0.8, self.shiftx = c(-0.03,-0.03,-0.09),self.shifty = c(-0.06,-0.06,+0.00),self.arrpos = c(1.5*pi,1.5*pi,0.5*pi), main= "Diagrama de transicion : El Tiempo", cex = 1.2)
+```
+```{r}
+#calculamos las probabilidades de transicion elevando la matriz al cuadrado
+El_tiempo^2
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
